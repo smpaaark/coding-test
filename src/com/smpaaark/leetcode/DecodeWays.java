@@ -2,14 +2,6 @@ package com.smpaaark.leetcode;
 
 public class DecodeWays {
 
-    int result = 0;
-
-    public static void main(String[] args) {
-        DecodeWays q = new DecodeWays();
-//        System.out.println(q.numDecodings("111111111111111111111111111111111111111111111"));
-        System.out.println(q.numDecodings("226"));
-    }
-
     public int numDecodings(String s) {
         int sLength = s.length();
         int[] dp = new int[sLength + 1];
