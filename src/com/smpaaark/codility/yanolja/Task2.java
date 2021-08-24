@@ -6,7 +6,7 @@ public class Task2 {
 
     public static void main(String[] args) {
         Task2 q = new Task2();
-        System.out.println(q.solution(0));
+        System.out.println(q.solution(60));
     }
 
     public int solution(int N) {
