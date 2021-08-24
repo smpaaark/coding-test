@@ -9,6 +9,10 @@ public class Task2 {
         System.out.println(q.solution(60));
     }
 
+    /**
+     * 일의 자리부터 최대한 9로 채워나가야 가장 작은 수라는 것을 파악함.
+     * 시간 복잡도: O(N),
+     */
     public int solution(int N) {
         // N이 한자리 수이면 그대로 리턴
         if (N < 10) {

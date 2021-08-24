@@ -5,32 +5,7 @@ public class Task4 {
     public static void main(String[] args) {
         Task4 q = new Task4();
         System.out.println(q.solution(new int[] {13, 7, 2, 8, 3}));
-//        System.out.println(q.solution2(new int[] {13, 7, 2, 8, 3}));
     }
-
-//    int result = 1;
-//
-//    public int solution2(int[] A) {
-//        divideAndConquer(A, 0, A.length - 1);
-//        return result;
-//    }
-//
-//    private int[] divideAndConquer(int[] A, int start, int end) {
-//        if (start >= end) {
-//            return new int[] {1, A[start]};
-//        }
-//
-//        int mid = start + (end - start) / 2;
-//        int[] left = divideAndConquer(A, start, mid);
-//        int[] right = divideAndConquer(A, mid + 1, end);
-//
-//        int midMax = divideAndConquerMid(A, start, mid, end);
-//    }
-//
-//    private int divideAndConquerMid(int[] A, int start, int mid, int end) {
-//
-//
-//    }
 
     boolean result = false;
 

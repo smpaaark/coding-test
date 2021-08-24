@@ -10,9 +10,10 @@ public class Task3 {
         System.out.println("정답2: " + q.solution2(new int[] {8, 8, 4, 3, 7, 9, 18, 8, 16, 8, 5, 79,51, 13, 5, 13,8, 89, 13, 2, 9}, 6));
     }
 
+    /**
+     * 시간 복잡도: O(n^2), 공간 복잡도: O(n)
+     */
     public int solution(int[] A, int K) {
-        long start = System.currentTimeMillis();
-
         // 최소값 초기화
         int min = Integer.MAX_VALUE;
 
@@ -36,13 +37,13 @@ public class Task3 {
             min = Math.min(maxHeap.poll() - minHeap.poll(), min);
         }
 
-        System.out.println(System.currentTimeMillis() - start);
         return min;
     }
 
+    /**
+     * 시간 복잡도: O(n), 공간 복잡도: O(n)
+     */
     public int solution2(int[] A, int K) {
-        long start = System.currentTimeMillis();
-
         // 최소값 초기화
         int result = Integer.MAX_VALUE;
 
@@ -89,7 +90,6 @@ public class Task3 {
             openIndex--;
         }
 
-        System.out.println(System.currentTimeMillis() - start);
         return result;
     }
 
