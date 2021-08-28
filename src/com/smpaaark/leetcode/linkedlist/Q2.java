@@ -1,4 +1,4 @@
-package com.smpaaark.leetcode;
+package com.smpaaark.leetcode.linkedlist;
 
 public class Q2 {
 

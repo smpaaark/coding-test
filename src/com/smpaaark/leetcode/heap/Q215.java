@@ -1,4 +1,4 @@
-package com.smpaaark.leetcode;
+package com.smpaaark.leetcode.heap;
 
 import java.util.PriorityQueue;
 

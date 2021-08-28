@@ -1,4 +1,4 @@
-package com.smpaaark.leetcode;
+package com.smpaaark.leetcode.graph;
 
 import java.util.LinkedList;
 import java.util.Queue;
