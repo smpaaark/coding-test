@@ -4,8 +4,39 @@ public class Task4 {
 
     public static void main(String[] args) {
         Task4 q = new Task4();
-        System.out.println(q.solution(new int[] {13, 7, 2, 8, 3}));
+        System.out.println(q.solution(new int[] {7, 1, 9, 1,2, 3, 7}));
+        System.out.println(q.solution2(new int[] {7, 1, 9, 1,2, 3, 7}));
     }
+
+    int result2 = 0;
+
+    public int solution2(int[] A) {
+        for (int i = 0; i < A.length; i++) { // O(n)
+            if (A.length - i > result2) { // 현재 남은 수가 최대값보다 클 때만 진행
+                calculate2(A, i + 1, 1, A[i], A[i] + "");
+            }
+        }
+
+        return result2;
+    }
+
+    private void calculate2(int[] A, int index, int currentSize, int tempAnd, String checkStr) {
+        // max 값 저장
+        result2 = Math.max(result2, currentSize);
+
+        for (int i = index; i < A.length; i++) {
+            if (currentSize + A.length - i > result2) { // 현재 남은 수가 최대값보다 클 때만 진행
+                int andNum = tempAnd & A[i];
+                if (andNum != 0) {
+                    calculate2(A, i + 1, currentSize + 1, andNum, checkStr + " " + A[i]);
+                }
+            } else {
+                return;
+            }
+        }
+    }
+
+// =================================================================================
 
     boolean result = false;
 
