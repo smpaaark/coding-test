@@ -11,7 +11,43 @@ public class Q329 {
 
     public static void main(String[] args) {
         Q329 q = new Q329();
-        System.out.println(q.longestIncreasingPath(new int[][] {{7,8,9},{9,7,6},{7,2,3}}));
+//        System.out.println(q.longestIncreasingPath(new int[][] {{7,8,9},{9,7,6},{7,2,3}}));
+        System.out.println(q.longestIncreasingPath2(new int[][] {{9, 9, 4},{6, 6, 8},{2, 1, 1}}));
+        System.out.println(q.longestIncreasingPath2(new int[][] {{7,8,9},{9,7,6},{7,2,3}}));
+    }
+
+    public int longestIncreasingPath2(int[][] matrix) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int[][] cache = new int[m][n];
+        int max = 1;
+        for (int i = 0 ; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                int len = dfs(i, j, m, n, matrix, cache);
+                max = Math.max(max, len);
+            }
+        }
+
+        return max;
+    }
+
+    private int dfs(int i, int j, int m, int n, int[][] matrix, int[][] cache) {
+        if (cache[i][j] > 0) {
+            return cache[i][j];
+        }
+
+        int max = 1;
+        for (int k = 0; k < 4; k++) {
+            int x = i + dx[k];
+            int y = j + dy[k];
+            if (x >= 0 && x < m && y >= 0 && y < n && matrix[x][y] > matrix[i][j]) {
+                int len = 1 + dfs(x, y, m, n, matrix, cache);
+                max = Math.max(max, len);
+            }
+        }
+
+        cache[i][j] = max;
+        return max;
     }
 
     public int longestIncreasingPath(int[][] matrix) {
