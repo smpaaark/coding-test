@@ -2,30 +2,30 @@ package com.smpaaark.leetcode.dp;
 
 public class Q5 {
 
+    String resultStr = "";
+
     public String longestPalindrome(String s) {
-        int sLength = s.length();
-        boolean[][] dp = new boolean[sLength][sLength];
-        String result = "";
-
-        for (int i = sLength - 1; i >= 0; i--) {
-            for (int j = i; j < sLength; j++) {
-                if (i == j) {
-                    dp[i][j] = true;
-                } else if (s.charAt(i) == s.charAt(j)){
-                    if (j - i <= 2){
-                        dp[i][j] = true;
-                    } else {
-                        dp[i][j] = dp[i + 1][j - 1];
-                    }
-                }
-
-                if (dp[i][j] && j - i + 1 > result.length()) {
-                    result = s.substring(i, j + 1);
-                }
-            }
+        if (s.length() == 1) {
+            return s;
         }
 
-        return result;
+        for (int i = 0; i < s.length() - 1; i++) {
+            solution(s, i, i);
+            solution(s, i, i + 1);
+        }
+
+        return resultStr;
+    }
+
+    private void solution(String s, int left, int right) {
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            left--;
+            right++;
+        }
+
+        if (resultStr.length() < right - left - 1) {
+            resultStr = s.substring(left + 1, right);
+        }
     }
 
 }

@@ -4,30 +4,29 @@ public class Q2 {
 
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         ListNode fakeHead = new ListNode();
-        fakeHead.next = addTwoNumbers(l1, l2, 0);
+        ListNode prevNode = fakeHead;
+        solution(l1, l2, 0, prevNode);
 
         return fakeHead.next;
     }
 
-    private ListNode addTwoNumbers(ListNode l1, ListNode l2, int carry) {
+    private void solution(ListNode l1, ListNode l2, int carry, ListNode prevNode) {
         if (l1 == null && l2 == null && carry == 0) {
-            return null;
+            return;
         }
 
-        int num1 = (l1 != null) ? l1.val : 0;
-        int num2 = (l2 != null) ? l2.val : 0;
+        int num1 = l1 != null ? l1.val : 0;
+        int num2 = l2 != null ? l2.val : 0;
+
         int sum = num1 + num2 + carry;
         carry = sum / 10;
         sum %= 10;
 
-        ListNode newNode = new ListNode(sum);
+        prevNode.next = new ListNode(sum);
 
-        ListNode nextL1 = (l1 != null) ? l1.next : null;
-        ListNode nextL2 = (l2 != null) ? l2.next : null;
-
-        newNode.next = addTwoNumbers(nextL1, nextL2, carry);
-
-        return newNode;
+        ListNode nextNode1 = l1 != null ? l1.next : null;
+        ListNode nextNode2 = l2 != null ? l2.next : null;
+        solution(nextNode1, nextNode2, carry, prevNode.next);
     }
 
     class ListNode {

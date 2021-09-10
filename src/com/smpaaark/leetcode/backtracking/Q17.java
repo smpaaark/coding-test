@@ -1,32 +1,30 @@
 package com.smpaaark.leetcode.backtracking;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class Q17 {
 
     final String[] letters = new String[]{"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
 
     public List<String> letterCombinations(String digits) {
-        List<String> result = new ArrayList<>();
-        if (digits.length() > 0) {
-            letterCombinations(digits, result, 0, "");
+        Queue<String> queue = new LinkedList<>();
+        if (digits.isEmpty()) {
+            return (LinkedList) queue;
         }
 
-        return result;
-    }
+        queue.offer("");
 
-    private void letterCombinations(String digits, List<String> result, int index, String tempLetter) {
-        if (digits.length() == tempLetter.length()) {
-            result.add(tempLetter);
-            return;
+        while (!queue.isEmpty() && queue.peek().length() != digits.length()) {
+            String qStr = queue.poll();
+            String tempStr = letters[digits.charAt(qStr.length()) - '0'];
+            for (char c : tempStr.toCharArray()) {
+                queue.offer(qStr + c);
+            }
         }
 
-        String strNumber = digits.substring(index, index + 1);
-        int number = Integer.parseInt(strNumber);
-        for (int i = 0; i < letters[number].length(); i++) {
-            letterCombinations(digits, result, index + 1, tempLetter + letters[number].substring(i, i + 1));
-        }
+        return (LinkedList) queue;
     }
 
 }

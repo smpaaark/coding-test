@@ -5,47 +5,41 @@ import java.util.Queue;
 
 public class Q207 {
 
-    public static void main(String[] args) {
-        Q207 q = new Q207();
-
-        System.out.println(q.canFinish(2, new int[][]{{0, 1}}));
-    }
-
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        int[][] courses = new int[numCourses][numCourses];
-        int[] preCourseCount = new int[numCourses];
+        if (numCourses == 1) {
+            return true;
+        }
+
+        int[][] matrix = new int[numCourses][numCourses];
+        int[] count = new int[numCourses];
 
         for (int[] pre : prerequisites) {
-            courses[pre[1]][pre[0]]++;
-            preCourseCount[pre[0]]++;
+            matrix[pre[1]][pre[0]]++;
+            count[pre[0]]++;
         }
 
         Queue<Integer> queue = new LinkedList<>();
-        int index = 0;
-        for (int num : preCourseCount) {
-            if (num == 0) {
-                queue.offer(index);
+        for (int i = 0; i < count.length; i++) {
+            if (count[i] == 0) {
+                queue.offer(i);
             }
-            index++;
         }
 
+        int remainCourse = numCourses;
         while (!queue.isEmpty()) {
             int course = queue.poll();
-            numCourses--;
-
-            index = 0;
-            for (int num : courses[course]) {
-                if (num > 0) {
-                    preCourseCount[index]--;
-                    if (preCourseCount[index] == 0) {
-                        queue.offer(index);
+            remainCourse--;
+            for (int i = 0; i < numCourses; i++) {
+                if (matrix[course][i] > 0) {
+                    count[i]--;
+                    if (count[i] == 0) {
+                        queue.offer(i);
                     }
                 }
-                index++;
             }
         }
 
-        return numCourses == 0 ? true : false;
+        return remainCourse == 0 ? true : false;
     }
 
 }
