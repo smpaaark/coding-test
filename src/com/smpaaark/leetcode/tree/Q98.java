@@ -2,23 +2,29 @@ package com.smpaaark.leetcode.tree;
 
 public class Q98 {
 
-    public boolean isValidBST(TreeNode root) {
-        return validate(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    public static void main(String[] args) {
+        Q98 q = new Q98();
+        TreeNode root = new TreeNode(2147483647);
+        System.out.println(q.isValidBST(root));
     }
 
-    private boolean validate(TreeNode root, long min, long max) {
+    public boolean isValidBST(TreeNode root) {
+        return solution(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    private boolean solution(TreeNode root, long minValue, long maxValue) {
         if (root == null) {
             return true;
         }
 
-        if (root.val <= min || root.val >= max) {
+        if (root.val <= minValue || root.val >= maxValue) {
             return false;
         }
 
-        return validate(root.left, min, root.val) && validate(root.right, root.val, max);
+        return solution(root.left, minValue, root.val) && solution(root.right, root.val, maxValue);
     }
 
-    class TreeNode {
+    static class TreeNode {
 
         int val;
         TreeNode left;

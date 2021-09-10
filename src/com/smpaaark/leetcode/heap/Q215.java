@@ -1,20 +1,19 @@
 package com.smpaaark.leetcode.heap;
 
-import java.util.PriorityQueue;
-
 public class Q215 {
 
     public int findKthLargest(int[] nums, int k) {
-        PriorityQueue<Integer> heap = new PriorityQueue<>();
+        return solution(nums, 0, nums.length - 1, k);
+    }
 
-        for (int num : nums) {
-            heap.offer(num);
-            if (heap.size() > k) {
-                heap.poll();
+    private int solution(int[] nums, int low, int high, int k) {
+        int pivot = low;
+
+        for (int i = 0; i < high - 1; i++) {
+            if (nums[i] < nums[i + 1]) {
+                
             }
         }
-
-        return heap.poll();
     }
 
 }

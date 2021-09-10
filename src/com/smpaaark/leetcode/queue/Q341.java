@@ -1,43 +1,55 @@
 package com.smpaaark.leetcode.queue;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class Q341 {
 
-    static class NestedIterator implements Iterator<Integer> {
+    public static void main(String[] args) {
+        Deque<Integer> deque = new ArrayDeque<>();
+        deque.offerLast(1);
+        deque.offerLast(3);
+        deque.offerLast(4);
+        deque.offerLast(5);
+        deque.offerLast(6);
+        deque.offerFirst(0);
 
-        Queue<Integer> queue = new LinkedList<>();
+        System.out.println(deque);
+    }
+
+    public class NestedIterator implements Iterator<Integer> {
+
+        Deque<NestedInteger> deque = new ArrayDeque<>();
 
         public NestedIterator(List<NestedInteger> nestedList) {
-            flatten(nestedList);
-        }
-
-        private void flatten(List<NestedInteger> nestedList) {
-            for (NestedInteger nestedInteger : nestedList) {
-                if (nestedInteger.isInteger()) {
-                    queue.offer(nestedInteger.getInteger());
-                } else {
-                    flatten(nestedInteger.getList());
-                }
-            }
+            prepareStack(nestedList);
         }
 
         @Override
         public Integer next() {
-            return queue.poll();
+            if (!hasNext()) {
+                return null;
+            }
+            return deque.pop().getInteger();
         }
 
         @Override
         public boolean hasNext() {
-            return queue.size() > 0 ? true : false;
+            while (!deque.isEmpty() && !deque.peek().isInteger()) {
+                List<NestedInteger> list = deque.pop().getList();
+                prepareStack(list);
+            }
+            return !deque.isEmpty();
+        }
+
+        private void prepareStack(List<NestedInteger> nestedList) {
+            for (int i = nestedList.size() - 1; i >= 0; i--) {
+                deque.offerFirst(nestedList.get(i));
+            }
         }
 
     }
 
-    static interface NestedInteger {
+    interface NestedInteger {
 
         // @return true if this NestedInteger holds a single integer, rather than a nested list.
         public boolean isInteger();
