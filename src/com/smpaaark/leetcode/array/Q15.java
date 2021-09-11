@@ -7,32 +7,38 @@ import java.util.List;
 public class Q15 {
 
     public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (nums.length < 3) {
+            return result;
+        }
+
         Arrays.sort(nums);
 
-        List<List<Integer>> result = new ArrayList<>();
-        for (int firstIndex = 0; firstIndex < nums.length - 2; firstIndex++) {
-            if (firstIndex == 0 || (nums[firstIndex] != nums[firstIndex - 1])) {
-                int secondIndex = firstIndex + 1;
-                int thirdIndex = nums.length - 1;
-                while (secondIndex < thirdIndex) {
-                    int needNum = 0 - (nums[firstIndex] + nums[secondIndex]);
-                    if (nums[thirdIndex] == needNum) {
-                        result.add(Arrays.asList(nums[firstIndex], nums[secondIndex], nums[thirdIndex]));
+        for (int i = 0; i < nums.length - 2; i++) {
+            if (i == 0 || (nums[i] != nums[i - 1])) {
+                int needNum = 0 - nums[i];
+                int left = i + 1;
+                int right = nums.length - 1;
 
-                        while (secondIndex < thirdIndex && nums[secondIndex] == nums[secondIndex + 1]) {
-                            secondIndex++;
+                while (left < right) {
+                    int sum = nums[left] + nums[right];
+                    if (sum == needNum) {
+                        result.add(Arrays.asList(nums[i], nums[left], nums[right]));
+
+                        while (left < right && nums[left] == nums[left + 1]) {
+                            left++;
                         }
 
-                        while (secondIndex < thirdIndex && nums[thirdIndex] == nums[thirdIndex - 1]) {
-                            thirdIndex--;
+                        while (left < right && nums[right] == nums[right - 1]) {
+                            right--;
                         }
 
-                        secondIndex++;
-                        thirdIndex--;
-                    } else if (nums[thirdIndex] > needNum) {
-                        thirdIndex--;
+                        left++;
+                        right--;
+                    } else if (sum < needNum) {
+                        left++;
                     } else {
-                        secondIndex++;
+                        right--;
                     }
                 }
             }

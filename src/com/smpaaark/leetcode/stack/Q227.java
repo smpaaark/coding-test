@@ -10,20 +10,38 @@ public class Q227 {
     }
 
     public int calculate(String s) {
+        if (s.length() == 1) {
+            return Character.getNumericValue(s.charAt(0));
+        }
+
         Stack<Integer> stack = new Stack<>();
         int num = 0;
-        char sign = '+';
-        for (char c : s.toCharArray()) {
+        char operation = '+';
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
             if (Character.isDigit(c)) {
-                num = (num * 10) + Integer.parseInt(String.valueOf(c));
-            } else if (c != ' '){
-                calculate(stack, num, sign);
-                sign = c;
+                num = (num * 10) + Character.getNumericValue(c);
+            }
+
+            if ((!Character.isDigit(c) && c != ' ') || i == s.length() - 1) {
+                switch (operation) {
+                    case '+':
+                        stack.push(num);
+                        break;
+                    case '-':
+                        stack.push(-num);
+                        break;
+                    case '*':
+                        stack.push(stack.pop() * num);
+                        break;
+                    case '/':
+                        stack.push(stack.pop() / num);
+                }
+
+                operation = c;
                 num = 0;
             }
         }
-
-        calculate(stack, num, sign);
 
         int result = 0;
         while (!stack.isEmpty()) {
@@ -31,23 +49,6 @@ public class Q227 {
         }
 
         return result;
-    }
-
-    private void calculate(Stack<Integer> stack, int num, char sign) {
-        switch (sign) {
-            case '+':
-                stack.push(num);
-                break;
-            case '-':
-                stack.push(-num);
-                break;
-            case '*':
-                stack.push(stack.pop() * num);
-                break;
-            case '/':
-                stack.push(stack.pop() / num);
-                break;
-        }
     }
 
 }

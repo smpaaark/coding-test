@@ -13,13 +13,22 @@ public class Q33 {
                 return mid;
             }
 
-            if (nums[mid] < target) {
-                if ()
-
+            if (nums[low] <= nums[mid]) {
+                if (target >= nums[low] && target <= nums[mid]) {
+                    high = mid - 1;
+                } else {
+                    low = mid + 1;
+                }
             } else {
-
+                if (target >= nums[mid] && target <= nums[high]) {
+                    low = mid + 1;
+                } else {
+                    high = mid - 1;
+                }
             }
         }
+
+        return -1;
     }
 
 }

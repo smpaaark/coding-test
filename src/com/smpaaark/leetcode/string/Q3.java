@@ -6,22 +6,27 @@ import java.util.Set;
 public class Q3 {
 
     public int lengthOfLongestSubstring(String s) {
+        if (s.length() < 2) {
+            return s.length();
+        }
+
+        int low = 0;
+        int high = 1;
+        int max = 0;
         Set<Character> set = new HashSet<>();
-        int leftIndex = 0;
-        int rightIndex = 0;
-        int result = 0;
-        while (rightIndex < s.length()) {
-            char c = s.charAt(rightIndex);
-            if (set.contains(c)) {
-                set.remove(s.charAt(leftIndex++));
+        set.add(s.charAt(0));
+        while (high < s.length()) {
+            if (set.contains(s.charAt(high))) {
+                set.remove(s.charAt(low));
+                low++;
             } else {
-                set.add(c);
-                result = Math.max(result, set.size());
-                rightIndex++;
+                set.add(s.charAt(high));
+                high++;
+                max = Math.max(max, set.size());
             }
         }
 
-        return result;
+        return max;
     }
 
 }

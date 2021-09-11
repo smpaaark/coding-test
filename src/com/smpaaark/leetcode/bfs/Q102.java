@@ -15,12 +15,13 @@ public class Q102 {
 
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
+
         while (!queue.isEmpty()) {
-            int qSize = queue.size();
-            List<Integer> innerList = new ArrayList<>();
-            while (qSize-- > 0) {
+            int size = queue.size();
+            List<Integer> list = new ArrayList<>();
+            while (size > 0) {
                 TreeNode node = queue.poll();
-                innerList.add(node.val);
+                list.add(node.val);
 
                 if (node.left != null) {
                     queue.offer(node.left);
@@ -29,9 +30,11 @@ public class Q102 {
                 if (node.right != null) {
                     queue.offer(node.right);
                 }
+
+                size--;
             }
 
-            result.add(innerList);
+            result.add(list);
         }
 
         return result;

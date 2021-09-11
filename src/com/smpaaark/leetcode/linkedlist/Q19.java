@@ -3,23 +3,24 @@ package com.smpaaark.leetcode.linkedlist;
 public class Q19 {
 
     public ListNode removeNthFromEnd(ListNode head, int n) {
-        ListNode slow = head;
-        ListNode fast = head;
-        while (n > 1 && fast != null) {
-            fast = fast.next;
-            n--;
+        if (head.next == null) {
+            return null;
         }
 
         ListNode fakeHead = new ListNode();
         fakeHead.next = head;
-        ListNode tempNode = fakeHead;
+        ListNode slow = fakeHead;
+        ListNode fast = fakeHead;
+        while (n-- > 0) {
+            fast = fast.next;
+        }
+
         while (fast.next != null) {
-            tempNode = slow;
             slow = slow.next;
             fast = fast.next;
         }
 
-        tempNode.next = slow.next;
+        slow.next = slow.next.next;
 
         return fakeHead.next;
     }

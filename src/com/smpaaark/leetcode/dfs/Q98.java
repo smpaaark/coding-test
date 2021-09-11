@@ -3,10 +3,10 @@ package com.smpaaark.leetcode.dfs;
 public class Q98 {
 
     public boolean isValidBST(TreeNode root) {
-        return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
+        return solution(root, Long.MIN_VALUE, Long.MAX_VALUE);
     }
 
-    private boolean isValidBST(TreeNode root, long minValue, long maxValue) {
+    private boolean solution(TreeNode root, long minValue, long maxValue) {
         if (root == null) {
             return true;
         }
@@ -15,7 +15,7 @@ public class Q98 {
             return false;
         }
 
-        return isValidBST(root.left, minValue, root.val) && isValidBST(root.right, root.val, maxValue);
+        return solution(root.left, minValue, root.val) && solution(root.right, root.val, maxValue);
     }
 
     class TreeNode {
