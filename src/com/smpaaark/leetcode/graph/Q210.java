@@ -6,17 +6,17 @@ import java.util.Queue;
 public class Q210 {
 
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        int[] preCount = new int[numCourses];
-        int[][] matrix = new int[numCourses][numCourses];
+        int[][] courseMatrix = new int[numCourses][numCourses];
+        int[] courseCount = new int[numCourses];
 
-        for (int[] array : prerequisites) {
-            preCount[array[0]]++;
-            matrix[array[1]][array[0]] = 1;
+        for (int[] pre : prerequisites) {
+            courseMatrix[pre[1]][pre[0]]++;
+            courseCount[pre[0]]++;
         }
 
         Queue<Integer> queue = new LinkedList<>();
-        for (int i = 0; i < preCount.length; i++) {
-            if (preCount[i] == 0) {
+        for (int i = 0; i < courseCount.length; i++) {
+            if (courseCount[i] == 0) {
                 queue.offer(i);
             }
         }
@@ -26,17 +26,18 @@ public class Q210 {
         while (!queue.isEmpty()) {
             int course = queue.poll();
             result[resultIndex++] = course;
-            for (int i = 0; i < numCourses; i++) {
-                if (matrix[course][i] > 0) {
-                    preCount[i]--;
-                    if (preCount[i] == 0) {
+
+            for (int i = 0; i < courseMatrix[course].length; i++) {
+                if (courseMatrix[course][i] > 0) {
+                    courseCount[i]--;
+                    if (courseCount[i] == 0) {
                         queue.offer(i);
                     }
                 }
             }
         }
 
-        return resultIndex == numCourses ? result : new int[0];
+        return resultIndex == result.length ? result : new int[0];
     }
 
 }

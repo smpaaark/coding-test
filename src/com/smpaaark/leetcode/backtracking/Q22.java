@@ -7,23 +7,23 @@ public class Q22 {
 
     public List<String> generateParenthesis(int n) {
         List<String> result = new ArrayList<>();
+        generateParenthesis(result, n, 0, 0, "");
 
-        generateParenthesis(n, 0, 0, "", result);
         return result;
     }
 
-    private void generateParenthesis(int n, int open, int close, String temp, List<String> result) {
-        if (temp.length() == n  * 2) {
-            result.add(temp);
+    private void generateParenthesis(List<String> result, int n, int open, int close, String tempStr) {
+        if (tempStr.length() == n * 2) {
+            result.add(tempStr);
             return;
         }
 
         if (open < n) {
-            generateParenthesis(n, open + 1, close, temp + "(", result);
+            generateParenthesis(result, n, open + 1, close, tempStr + "(");
         }
 
         if (close < open) {
-            generateParenthesis(n, open, close + 1, temp + ")", result);
+            generateParenthesis(result, n, open, close + 1, tempStr + ")");
         }
     }
 

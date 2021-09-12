@@ -1,8 +1,6 @@
 package com.smpaaark.leetcode.heap;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class Q347 {
 
@@ -12,18 +10,30 @@ public class Q347 {
             map.put(num, map.getOrDefault(num, 0) + 1);
         }
 
-        PriorityQueue<Map.Entry<Integer, Integer>> heap = new PriorityQueue<>((a, b) -> b.getValue() - a.getValue());
-
+        List<Integer>[] countArray = new ArrayList[nums.length + 1];
         for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-            heap.offer(entry);
+            Integer value = entry.getValue();
+            if (countArray[value] == null) {
+                countArray[value] = new ArrayList();
+            }
+
+            countArray[value].add(entry.getKey());
         }
 
         int[] result = new int[k];
-        for (int i = 0; i < k; i++) {
-            result[i] = heap.poll().getKey();
+        int index = 0;
+        for (int i = countArray.length - 1; i > 0; i--) {
+            if (countArray[i] != null) {
+                for (int num : countArray[i]) {
+                    result[index++] = num;
+                    if (index == k) {
+                        return result;
+                    }
+                }
+            }
         }
 
-        return result;
+        return null;
     }
 
 }
