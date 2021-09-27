@@ -12,15 +12,17 @@ public class Q49 {
     public List<List<String>> groupAnagrams(String[] strs) {
         Map<String, List<String>> map = new HashMap<>();
         for (String str : strs) {
-            char[] strArray = str.toCharArray();
-            Arrays.sort(strArray);
-            String sortStr = String.valueOf(strArray);
-            if (map.containsKey(sortStr)) {
-                map.get(sortStr).add(str);
+            char[] alphabet = new char[26];
+            for (char c : str.toCharArray()) {
+                alphabet[c - 'a']++;
+            }
+            String key = String.valueOf(alphabet);
+            if (map.containsKey(key)) {
+                map.get(key).add(str);
             } else {
                 List<String> list = new ArrayList<>();
                 list.add(str);
-                map.put(sortStr, list);
+                map.put(key, list);
             }
         }
 
