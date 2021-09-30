@@ -1,27 +1,17 @@
 package com.smpaaark.leetcode.queue;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Stack;
 
 public class Q341 {
 
-    public static void main(String[] args) {
-        Deque<Integer> deque = new ArrayDeque<>();
-        deque.offerLast(1);
-        deque.offerLast(3);
-        deque.offerLast(4);
-        deque.offerLast(5);
-        deque.offerLast(6);
-        deque.offerFirst(0);
+    class NestedIterator implements Iterator<Integer> {
 
-        System.out.println(deque);
-    }
-
-    public class NestedIterator implements Iterator<Integer> {
-
-        Deque<NestedInteger> deque = new ArrayDeque<>();
+        Stack<NestedInteger> stack = new Stack<>();
 
         public NestedIterator(List<NestedInteger> nestedList) {
-            prepareStack(nestedList);
+            flattenNestedList(nestedList);
         }
 
         @Override
@@ -29,21 +19,23 @@ public class Q341 {
             if (!hasNext()) {
                 return null;
             }
-            return deque.pop().getInteger();
+
+            return stack.pop().getInteger();
         }
 
         @Override
         public boolean hasNext() {
-            while (!deque.isEmpty() && !deque.peek().isInteger()) {
-                List<NestedInteger> list = deque.pop().getList();
-                prepareStack(list);
+            while (!stack.isEmpty() && !stack.peek().isInteger()) {
+                NestedInteger nestedInteger = stack.pop();
+                flattenNestedList(nestedInteger.getList());
             }
-            return !deque.isEmpty();
+
+            return !stack.isEmpty();
         }
 
-        private void prepareStack(List<NestedInteger> nestedList) {
+        private void flattenNestedList(List<NestedInteger> nestedList) {
             for (int i = nestedList.size() - 1; i >= 0; i--) {
-                deque.offerFirst(nestedList.get(i));
+                stack.push(nestedList.get(i));
             }
         }
 

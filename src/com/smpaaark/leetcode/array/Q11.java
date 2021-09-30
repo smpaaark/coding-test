@@ -5,20 +5,21 @@ public class Q11 {
     public int maxArea(int[] height) {
         int left = 0;
         int right = height.length - 1;
-        int max = 0;
+        int maxArea = 0;
 
         while (left < right) {
-            int area = (right - left) * Math.min(height[left], height[right]);
-            max = Math.max(max, area);
+            int horizontal = right - left;
+            int vertical = Math.min(height[left], height[right]);
+            maxArea = Math.max(maxArea, horizontal * vertical);
 
             if (height[left] < height[right]) {
                 left++;
-            } else {
+            } else if (height[left] >= height[right]) {
                 right--;
             }
         }
 
-        return max;
+        return maxArea;
     }
 
 }
