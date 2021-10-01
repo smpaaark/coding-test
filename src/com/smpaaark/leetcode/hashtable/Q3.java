@@ -5,30 +5,39 @@ import java.util.Set;
 
 public class Q3 {
 
+    private int maxLength = 0;
+    private int rightIndex = 0;
+    private int leftIndex = 0;
+
     public int lengthOfLongestSubstring(String s) {
         if (s.length() < 2) {
             return s.length();
         }
 
-        int left = 0;
-        int right = 1;
         Set<Character> set = new HashSet<>();
-        set.add(s.charAt(0));
-        int max = 1;
+        solution(s, set);
 
-        while (right < s.length()) {
-            if (set.contains(s.charAt(right))) {
-                set.remove(s.charAt(left));
-                left++;
-            } else {
-                set.add(s.charAt(right));
-                right++;
+        maxLength = Math.max(maxLength, set.size());
 
-                max = Math.max(max, set.size());
-            }
+        return maxLength;
+    }
+
+    private void solution(String s, Set<Character> set) {
+        while (rightIndex < s.length()) {
+            checkRightIndexCharacter(s, set);
+        }
+    }
+
+    private void checkRightIndexCharacter(String s, Set<Character> set) {
+        if (set.contains(s.charAt(rightIndex))) {
+            maxLength = Math.max(maxLength, set.size());
+            set.remove(s.charAt(leftIndex));
+            leftIndex++;
+            return;
         }
 
-        return max;
+        set.add(s.charAt(rightIndex));
+        rightIndex++;
     }
 
 }

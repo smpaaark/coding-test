@@ -6,40 +6,57 @@ import java.util.Queue;
 public class Q207 {
 
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        if (numCourses == 1) {
-            return true;
-        }
+        int[] preCoursesCount = new int[numCourses];
+        int[][] preCoursesMatrix = new int[numCourses][numCourses];
 
-        int[][] matrix = new int[numCourses][numCourses];
-        int[] count = new int[numCourses];
-
-        for (int[] pre : prerequisites) {
-            matrix[pre[1]][pre[0]]++;
-            count[pre[0]]++;
+        for (int[] prerequisite : prerequisites) {
+            preCoursesMatrix[prerequisite[1]][prerequisite[0]]++;
+            preCoursesCount[prerequisite[0]]++;
         }
 
         Queue<Integer> queue = new LinkedList<>();
-        for (int i = 0; i < count.length; i++) {
-            if (count[i] == 0) {
-                queue.offer(i);
-            }
-        }
+        offerZeroCourse(preCoursesCount, queue);
 
-        int remainCourse = numCourses;
+        int completeCourse = getCompleteCourse(preCoursesCount, preCoursesMatrix, queue);
+
+        return numCourses == completeCourse;
+    }
+
+    private int getCompleteCourse(int[] preCoursesCount, int[][] preCoursesMatrix, Queue<Integer> queue) {
+        int completeCourse = 0;
         while (!queue.isEmpty()) {
             int course = queue.poll();
-            remainCourse--;
-            for (int i = 0; i < numCourses; i++) {
-                if (matrix[course][i] > 0) {
-                    count[i]--;
-                    if (count[i] == 0) {
-                        queue.offer(i);
-                    }
-                }
-            }
+            completeCourse++;
+            updateMatrix(preCoursesCount, preCoursesMatrix, queue, course);
         }
+        return completeCourse;
+    }
 
-        return remainCourse == 0 ? true : false;
+    private void updateMatrix(int[] preCoursesCount, int[][] preCoursesMatrix, Queue<Integer> queue, int course) {
+        for (int i = 0; i < preCoursesMatrix[course].length; i++) {
+            checkCourse(preCoursesCount, preCoursesMatrix, queue, course, i);
+        }
+    }
+
+    private void checkCourse(int[] preCoursesCount, int[][] preCoursesMatrix, Queue<Integer> queue, int course, int i) {
+        if (preCoursesMatrix[course][i] > 0) {
+            preCoursesMatrix[course][i]--;
+            preCoursesCount[i]--;
+
+            checkZero(preCoursesCount, queue, i);
+        }
+    }
+
+    private void offerZeroCourse(int[] preCoursesCount, Queue<Integer> queue) {
+        for (int i = 0; i < preCoursesCount.length; i++) {
+            checkZero(preCoursesCount, queue, i);
+        }
+    }
+
+    private void checkZero(int[] preCoursesCount, Queue<Integer> queue, int i) {
+        if (preCoursesCount[i] == 0) {
+            queue.offer(i);
+        }
     }
 
 }
