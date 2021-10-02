@@ -4,15 +4,13 @@ public class Q622 {
 
     class MyCircularQueue {
 
-        int[] queue;
-        int maxSize;
-        int currentSize;
-        int front;
+        int[] array;
+        int front = 0;
         int rear = -1;
+        int count = 0;
 
         public MyCircularQueue(int k) {
-            queue = new int[k];
-            maxSize = k;
+            array = new int[k];
         }
 
         public boolean enQueue(int value) {
@@ -20,13 +18,9 @@ public class Q622 {
                 return false;
             }
 
-            rear++;
-            if (rear == maxSize) {
-                rear %= maxSize;
-            }
-
-            queue[rear] = value;
-            currentSize++;
+            rear = (rear + 1) % array.length;
+            array[rear] = value;
+            count++;
             return true;
         }
 
@@ -35,12 +29,8 @@ public class Q622 {
                 return false;
             }
 
-            front++;
-            if (front == maxSize) {
-                front %= maxSize;
-            }
-
-            currentSize--;
+            front = (front + 1) % array.length;
+            count--;
             return true;
         }
 
@@ -49,7 +39,7 @@ public class Q622 {
                 return -1;
             }
 
-            return queue[front];
+            return array[front];
         }
 
         public int Rear() {
@@ -57,15 +47,15 @@ public class Q622 {
                 return -1;
             }
 
-            return queue[rear];
+            return array[rear];
         }
 
         public boolean isEmpty() {
-            return currentSize == 0 ? true : false;
+            return count == 0;
         }
 
         public boolean isFull() {
-            return currentSize == maxSize ? true : false;
+            return count == array.length;
         }
 
     }
