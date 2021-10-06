@@ -6,17 +6,17 @@ import java.util.Queue;
 public class Q210 {
 
     public int[] findOrder(int numCourses, int[][] prerequisites) {
+        int[] preCourseCountArray = new int[numCourses];
         int[][] courseMatrix = new int[numCourses][numCourses];
-        int[] courseCount = new int[numCourses];
 
         for (int[] pre : prerequisites) {
+            preCourseCountArray[pre[0]]++;
             courseMatrix[pre[1]][pre[0]]++;
-            courseCount[pre[0]]++;
         }
 
         Queue<Integer> queue = new LinkedList<>();
-        for (int i = 0; i < courseCount.length; i++) {
-            if (courseCount[i] == 0) {
+        for (int i = 0; i < preCourseCountArray.length; i++) {
+            if (preCourseCountArray[i] == 0) {
                 queue.offer(i);
             }
         }
@@ -25,19 +25,24 @@ public class Q210 {
         int resultIndex = 0;
         while (!queue.isEmpty()) {
             int course = queue.poll();
-            result[resultIndex++] = course;
+            result[resultIndex] = course;
+            resultIndex++;
 
             for (int i = 0; i < courseMatrix[course].length; i++) {
                 if (courseMatrix[course][i] > 0) {
-                    courseCount[i]--;
-                    if (courseCount[i] == 0) {
+                    preCourseCountArray[i]--;
+                    if (preCourseCountArray[i] == 0) {
                         queue.offer(i);
                     }
                 }
             }
         }
 
-        return resultIndex == result.length ? result : new int[0];
+        if (resultIndex == numCourses) {
+            return result;
+        }
+
+        return new int[0];
     }
 
 }

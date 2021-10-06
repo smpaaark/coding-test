@@ -15,29 +15,37 @@ public class Q102 {
 
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
-
         while (!queue.isEmpty()) {
-            int size = queue.size();
-            List<Integer> list = new ArrayList<>();
-            while (size > 0) {
-                TreeNode node = queue.poll();
-                list.add(node.val);
-
-                if (node.left != null) {
-                    queue.offer(node.left);
-                }
-
-                if (node.right != null) {
-                    queue.offer(node.right);
-                }
-
-                size--;
-            }
-
-            result.add(list);
+            levelOrder(result, queue);
         }
 
         return result;
+    }
+
+    private void levelOrder(List<List<Integer>> result, Queue<TreeNode> queue) {
+        int queueSize = queue.size();
+        List<Integer> innerList = new ArrayList<>();
+        while (queueSize > 0) {
+            queueSize = levelOrder(queue, queueSize, innerList);
+        }
+
+        result.add(innerList);
+    }
+
+    private int levelOrder(Queue<TreeNode> queue, int queueSize, List<Integer> innerList) {
+        TreeNode pollNode = queue.poll();
+        innerList.add(pollNode.val);
+
+        if (pollNode.left != null) {
+            queue.offer(pollNode.left);
+        }
+
+        if (pollNode.right != null) {
+            queue.offer(pollNode.right);
+        }
+
+        queueSize--;
+        return queueSize;
     }
 
     class TreeNode {

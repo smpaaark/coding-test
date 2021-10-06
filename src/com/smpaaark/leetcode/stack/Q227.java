@@ -10,38 +10,20 @@ public class Q227 {
     }
 
     public int calculate(String s) {
-        if (s.length() == 1) {
-            return Character.getNumericValue(s.charAt(0));
-        }
-
         Stack<Integer> stack = new Stack<>();
-        int num = 0;
-        char operation = '+';
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
+        int currentNumber = 0;
+        char currentOperator = '+';
+        for (char c : s.toCharArray()) {
             if (Character.isDigit(c)) {
-                num = (num * 10) + Character.getNumericValue(c);
-            }
-
-            if ((!Character.isDigit(c) && c != ' ') || i == s.length() - 1) {
-                switch (operation) {
-                    case '+':
-                        stack.push(num);
-                        break;
-                    case '-':
-                        stack.push(-num);
-                        break;
-                    case '*':
-                        stack.push(stack.pop() * num);
-                        break;
-                    case '/':
-                        stack.push(stack.pop() / num);
-                }
-
-                operation = c;
-                num = 0;
+                currentNumber = (currentNumber * 10) + (c - '0');
+            } else if ((!Character.isDigit(c) && c != ' ')){
+                calculate(stack, currentNumber, currentOperator);
+                currentOperator = c;
+                currentNumber = 0;
             }
         }
+
+        calculate(stack, currentNumber, currentOperator);
 
         int result = 0;
         while (!stack.isEmpty()) {
@@ -49,6 +31,18 @@ public class Q227 {
         }
 
         return result;
+    }
+
+    private void calculate(Stack<Integer> stack, int currentNumber, char currentOperator) {
+        if (currentOperator == '+') {
+            stack.push(currentNumber);
+        } else if (currentOperator == '-') {
+            stack.push(-currentNumber);
+        } else if (currentOperator == '*') {
+            stack.push(stack.pop() * currentNumber);
+        } else if (currentOperator == '/') {
+            stack.push(stack.pop() / currentNumber);
+        }
     }
 
 }

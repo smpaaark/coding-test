@@ -3,27 +3,26 @@ package com.smpaaark.leetcode.binarysearch;
 public class Q33 {
 
     public int search(int[] nums, int target) {
-        int low = 0;
-        int high = nums.length - 1;
+        int left = 0;
+        int right = nums.length - 1;
 
-        while (low <= high) {
-            int mid = low + (high - low) / 2;
-
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
             if (nums[mid] == target) {
                 return mid;
             }
 
-            if (nums[low] <= nums[mid]) {
-                if (target >= nums[low] && target <= nums[mid]) {
-                    high = mid - 1;
+            if (nums[mid] > target) {
+                if (nums[left] < nums[mid] && nums[left] > target) {
+                    left = mid + 1;
                 } else {
-                    low = mid + 1;
+                    right = mid - 1;
                 }
             } else {
-                if (target >= nums[mid] && target <= nums[high]) {
-                    low = mid + 1;
+                if (nums[right] > nums[mid] && nums[right] < target) {
+                    right = mid - 1;
                 } else {
-                    high = mid - 1;
+                    left = mid + 1;
                 }
             }
         }

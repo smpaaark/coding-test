@@ -1,6 +1,9 @@
 package com.smpaaark.leetcode.heap;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Q347 {
 
@@ -11,29 +14,29 @@ public class Q347 {
         }
 
         List<Integer>[] countArray = new ArrayList[nums.length + 1];
-        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-            Integer value = entry.getValue();
-            if (countArray[value] == null) {
-                countArray[value] = new ArrayList();
+        for (int keyNum : map.keySet()) {
+            int count = map.get(keyNum);
+            if (countArray[count] == null) {
+                countArray[count] = new ArrayList();
             }
 
-            countArray[value].add(entry.getKey());
+            countArray[count].add(keyNum);
         }
 
         int[] result = new int[k];
-        int index = 0;
-        for (int i = countArray.length - 1; i > 0; i--) {
+        int kIndex = 0;
+        for (int i = countArray.length - 1; i >= 0; i--) {
             if (countArray[i] != null) {
                 for (int num : countArray[i]) {
-                    result[index++] = num;
-                    if (index == k) {
+                    result[kIndex++] = num;
+                    if (kIndex == k) {
                         return result;
                     }
                 }
             }
         }
 
-        return null;
+        return result;
     }
 
 }
