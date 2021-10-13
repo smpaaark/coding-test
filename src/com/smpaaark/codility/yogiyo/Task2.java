@@ -1,6 +1,7 @@
 package com.smpaaark.codility.yogiyo;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Task2 {
@@ -10,6 +11,13 @@ public class Task2 {
         System.out.println(q.solution(new int[] {6, 2, 3, 5, 6, 3}));
     }
 
+    /**
+     * 숫자 배열이 주어졌을때 1~최대값까지 1개씩 꽉 채워지게 하기 위해 이동해야 하는 횟수 구하기
+     * O(n)
+     * 개선할부분: ArrayList -> LinkedList로 변경
+     * @param A
+     * @return
+     */
     public int solution(int[] A) {
         if (A.length == 1) {
             return 0;
@@ -20,8 +28,8 @@ public class Task2 {
             cache[num]++;
         }
 
-        List<Integer> zeroList = new ArrayList<>();
-        List<Integer> duplicateList = new ArrayList<>();
+        List<Integer> zeroList = new LinkedList<>();
+        List<Integer> duplicateList = new LinkedList<>();
         for (int i = 1; i < cache.length; i++) {
             if (cache[i] == 0) {
                 zeroList.add(i);
